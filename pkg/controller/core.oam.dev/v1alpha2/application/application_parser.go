@@ -109,7 +109,7 @@ func (p *Parser) GenerateAppFile(name string, app *v1alpha2.Application) (*Appfi
 	appfile.Name = name
 	var wds []*Workload
 	for _, comp := range app.Spec.Components {
-		wd, err := p.parseWorkload(comp)
+		wd, err := p.ParseWorkload(comp)
 		if err != nil {
 			return nil, err
 		}
@@ -120,7 +120,8 @@ func (p *Parser) GenerateAppFile(name string, app *v1alpha2.Application) (*Appfi
 	return appfile, nil
 }
 
-func (p *Parser) parseWorkload(comp v1alpha2.ApplicationComponent) (*Workload, error) {
+// ParseWorkload parses an applicationComponent to a workload
+func (p *Parser) ParseWorkload(comp v1alpha2.ApplicationComponent) (*Workload, error) {
 	workload := new(Workload)
 	workload.Traits = []*Trait{}
 	workload.Name = comp.Name
