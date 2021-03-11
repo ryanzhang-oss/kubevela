@@ -98,16 +98,17 @@ var _ = BeforeSuite(func(done Done) {
 	}
 
 	// TODO: Remove this after we get rid of the integration test dir
-	By("Applying CRD of WorkloadDefinition and TraitDefinition")
-	var workloadDefinitionCRD crdv1.CustomResourceDefinition
-	Expect(readYaml("../../charts/vela-core/crds/core.oam.dev_workloaddefinitions.yaml", &workloadDefinitionCRD)).Should(BeNil())
-	Expect(k8sClient.Create(context.Background(), &workloadDefinitionCRD)).Should(SatisfyAny(BeNil(), &util.AlreadyExistMatcher{}))
+	/*
+		By("Applying CRD of WorkloadDefinition and TraitDefinition")
+		var workloadDefinitionCRD crdv1.CustomResourceDefinition
+		Expect(readYaml("../../charts/vela-core/crds/core.oam.dev_workloaddefinitions.yaml", &workloadDefinitionCRD)).Should(BeNil())
+		Expect(k8sClient.Create(context.Background(), &workloadDefinitionCRD)).Should(SatisfyAny(BeNil(), &util.AlreadyExistMatcher{}))
 
-	var traitDefinitionCRD crdv1.CustomResourceDefinition
-	Expect(readYaml("../../charts/vela-core/crds/core.oam.dev_traitdefinitions.yaml", &traitDefinitionCRD)).Should(BeNil())
-	Expect(k8sClient.Create(context.Background(), &traitDefinitionCRD)).Should(SatisfyAny(BeNil(), &util.AlreadyExistMatcher{}))
-	By("Finished setting up test environment")
-
+		var traitDefinitionCRD crdv1.CustomResourceDefinition
+		Expect(readYaml("../../charts/vela-core/crds/core.oam.dev_traitdefinitions.yaml", &traitDefinitionCRD)).Should(BeNil())
+		Expect(k8sClient.Create(context.Background(), &traitDefinitionCRD)).Should(SatisfyAny(BeNil(), &util.AlreadyExistMatcher{}))
+		By("Finished setting up test environment")
+	*/
 	// Create manual scaler trait definition
 	manualscalertrait = v1alpha2.TraitDefinition{
 		ObjectMeta: metav1.ObjectMeta{
@@ -304,20 +305,22 @@ var _ = AfterSuite(func() {
 	// TODO: Remove this after we get rid of the integration test dir
 	// Below is a CI hack so that the integration test can run. We need to migrate the integration test
 	// to this e2e dir and suite (https://github.com/oam-dev/kubevela/issues/1147)
-	By("Deleting all the definitions by deleting the definition CRDs")
-	crd = crdv1.CustomResourceDefinition{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "workloaddefinitions.core.oam.dev",
-		},
-	}
-	Expect(k8sClient.Delete(context.Background(), &crd)).Should(SatisfyAny(BeNil(), &util.NotFoundMatcher{}))
-	By("Deleted the workloaddefinitions CRD")
+	/*
+		By("Deleting all the definitions by deleting the definition CRDs")
+		crd = crdv1.CustomResourceDefinition{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "workloaddefinitions.core.oam.dev",
+			},
+		}
+		Expect(k8sClient.Delete(context.Background(), &crd)).Should(SatisfyAny(BeNil(), &util.NotFoundMatcher{}))
+		By("Deleted the workloaddefinitions CRD")
 
-	crd = crdv1.CustomResourceDefinition{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "traitdefinitions.core.oam.dev",
-		},
-	}
-	Expect(k8sClient.Delete(context.Background(), &crd)).Should(SatisfyAny(BeNil(), &util.NotFoundMatcher{}))
-	By("Deleted the workloaddefinitions CRD")
+		crd = crdv1.CustomResourceDefinition{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "traitdefinitions.core.oam.dev",
+			},
+		}
+		Expect(k8sClient.Delete(context.Background(), &crd)).Should(SatisfyAny(BeNil(), &util.NotFoundMatcher{}))
+		By("Deleted the workloaddefinitions CRD")
+	*/
 })
